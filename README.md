@@ -1,7 +1,9 @@
 # BI_Finance_project
 (Français) Travail dans le cadre d'un cours de BI Finance. L'essentiel se fait sous excel, mais le traitement préalable a été réalisé sous Python avec Pandas.
 
-Les fichiers jupyter notebook sont à considérer dans cet order :
+Objectif : parser la data générée à partir de la BDD. Fichier massif de 2.8 millions de ligne donc il était nécessaire de passer par python. C'est pas plus mal car ça m'a permi de faire différent traitement pour résoudre les problèmes de dates manquantes et des changements brutaux de cours dûs aux splits/reverse-splits et autres opérations altérant le cours des actions.
+
+Les fichiers jupyter notebook sont à considérer dans cet ordre :
   1.  BI Finance traitement des donnees.ipynb
   2.  BI Finance - suppression des outliers et sélection du portefeuille.ipynb
 
