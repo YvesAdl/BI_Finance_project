@@ -9,7 +9,15 @@ Les fichiers jupyter notebook sont à considérer dans cet ordre :
 
 La base de données est trop lourde pour être mise en ligne, veiller à utiliser les bons noms de fichiers. La requête SQL pour obtenir la même base que moi est inclue.
 
-J'en suis à une étape intermédiaire où il faut se décider sur la stratégie pour se constituer le portefeuille de 20 actifs. Plusieurs remarques
-  * La consigne n'est pas explicite sur la nécessité d'optimiser la rentabilité, donc je ne sais pas si ça rentre en jeu. -> il faut se décider si les actifs sont choisi aléatoirement (tout en respectant les conditions de la consigne) ou s'il convient de les choisir selon des mesures de rendement ou de volatilité (que l'on ne connait qu'à posteriori, donc pas sûr que ce soit l'idée)
-  * 30% de 20 actifs = ~6 actifs, alors qu'il existe au total 11 secteur. Il est donc impossible de répartir le risque sur tous les secteurs toutes les zones géographiques prises indépendamment. 
-  
+Flux de données (notamment entre les 3 scripts et les excels) : description à venir.
+
+Quelques remarques, surtout sur la partie 2 - construction d'un portfolio : 
+  * L'énoncé comporte de nombreux points de flou qui nous font opter pour des hypothèses arbitraires. Les points suivants servent essentiellement à décrire ces hypothèses.
+  * Pour la fusion des plusieurs séries de dates inégales : après confirmation de M. Mazars -> choisir le chemin le plus long ("outer join") avec un forward fill pour les valeurs manquantes. Autrement dit, on choisit la dernière valeur connue pour les actifs comportant des valeurs manquantes.
+  * Comme décrit dans les script de traitement : la donnée est très incomplète et inconstante. Nous avons mis en place un nombre limité de traitements qui ont principalement 2 buts : supprimer les colonnes comportant de trop nombreux NaN consécutifs (considérés comme sortis des marchées publics) ; supprimer les colonnes dont les actifs connaissent des sauts trop brutaux en valeurs (correspondant à des splits ou d'autres opérations qui ne reflettent pas leur valeur réelle).
+  * En plus de ces 2 traitements, nous avons supprimé les 45 premières lignes sur tout le jeu de donnée car elles étaient complètement absentes pour les instruments côtés au Japon. Le choix était : soit on supprime 200 actions parce que le jeu de donné est corrompu sur les 45 premières dates, soit on les garde mais on supprime les lignes pour lesquelles nous avons constaté un problème commun, choix pour lequel nous avons opté.
+  * L'objectif retenu est simplement celui de la diversification du portefeuille sur les zones géographiques NA (40%) EU(30%) Asie (30%) et sur les 11 secteurs d'activité ; et non pas une optimisation de performances. Nous avons donc sélectionné les actifs complètement au hasard (en tachant de les tirer proportionnellemnt dans toutes les zones et tous les secteurs) puis nous avons ajusté les poids de manière à optimiser l'équilibre de départ le plus possible (en terme de valeur par zone et par industrie).
+  * La performance "répartie" est représentée par se contribution ; La volatilité s'appuie sur la formule sum{ var(a_i*X_i) } = sum{ a_i²*var(X_i) + 2*a_i*a_j*cov(X_i,X_j) (forall unique i!=j pairs) }
+
+
+Correction à effectuer : pour 2.d et 2.e, il faut utiliser sur toute la période au lieu de la dernière année.
